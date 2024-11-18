@@ -191,6 +191,7 @@ class DDLConverter:
                 ddl_column = {
                     "name": column.get("name", ""),
                     "type": column.get("type", ""),
+                    "sample": column.get("sample", []),
                 }
                 if "properties" in column:
                     ddl_column["properties"] = column["properties"]
@@ -256,6 +257,10 @@ class DDLConverter:
                         )
                     else:
                         comment = ""
+
+                    if "sample" in column:
+                        comment = comment + f"-- sample: {column['sample']}\n  "
+
                     if "isCalculated" in column and column["isCalculated"]:
                         comment = (
                             comment
